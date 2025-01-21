@@ -29,6 +29,7 @@ def process_with_gemini(text):
         - Name
         - Phone Number
         - Address
+        - Role
 
         Text: {text}
 
@@ -37,6 +38,7 @@ def process_with_gemini(text):
             "Name": "John Doe",
             "Phone": "123-456-7890",
             "Address": "123 Main St, City, State"
+            "Role": "Software Developer"
         }}
         """
         
@@ -54,11 +56,11 @@ def process_with_gemini(text):
             data = json.loads(cleaned_text)
             return data
         else:
-            return {"Name": "", "Phone": "", "Address": ""}
+            return {"Name": "", "Phone": "", "Address": "", "Role": ""}
             
     except Exception as e:
         st.error(f"Error processing text: {e}")
-        return {"Name": "", "Phone": "", "Address": ""}
+        return {"Name": "", "Phone": "", "Address": "", "Role": ""}
 
 def main():
     st.title("PDF Information Extractor")
@@ -79,13 +81,15 @@ def main():
             name = st.text_input("Name", value=data.get("Name", ""))
             phone = st.text_input("Phone Number", value=data.get("Phone", ""))
             address = st.text_area("Address", value=data.get("Address", ""))
+            role = st.text_area("Role", value=data.get("Role", ""))
             
             if st.button("Save Information"):
                 st.success("Information saved successfully!")
                 st.json({
                     "Name": name,
                     "Phone": phone,
-                    "Address": address
+                    "Address": address,
+                    "Role": role
                 })
 
 if __name__ == "__main__":
